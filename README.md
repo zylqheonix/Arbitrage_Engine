@@ -1,4 +1,4 @@
-# Arbitrage monitor
+# Arbitrage Engine
 
 C++ **detector-only** tool: live **Coinbase** and **Binance** (Spot WebSocket) quotes, normalized into a shared struct, then a small **engine** estimates **two-way** cross-venue edge after **slippage** and **fees**. Optional **CSV** logging, **JSON config**, and **reconnect with backoff**.
 
