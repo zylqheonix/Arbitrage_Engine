@@ -12,6 +12,10 @@ WssStream connect(asio::io_context& ioc,
 
 void subscribe_ticker(WssStream& ws, std::string const& product_id);
 
-void read_next(WssStream& ws, std::function<void(QuoteUpdate const&)> on_quote);
+using QuoteCallback = std::function<void(QuoteUpdate const&)>;
+using ErrorCallback = std::function<void(beast::error_code)>;
+
+void read_next(WssStream& ws, QuoteCallback on_quote,
+               ErrorCallback on_error = nullptr);
 
 }  // namespace coinbase

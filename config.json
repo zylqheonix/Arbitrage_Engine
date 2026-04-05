@@ -1,0 +1,34 @@
+{
+  "coinbase": {
+    "host": "ws-feed.exchange.coinbase.com",
+    "port": "443",
+    "target": "/",
+    "symbol": "BTC-USDT",
+    "fee_rate": 0.001
+  },
+  "binance": {
+    "hosts": [
+      { "host": "stream.binance.com", "port": "443" },
+      { "host": "stream.binance.com", "port": "9443" },
+      { "host": "stream.binance.us",  "port": "9443" },
+      { "host": "stream.binance.us",  "port": "443" }
+    ],
+    "target": "/ws",
+    "symbol": "btcusdt",
+    "fee_rate": 0.001
+  },
+  "engine": {
+    "slippage_rate": 0.001,
+    "max_age_ms": 1000,
+    "min_edge_threshold": 0.0
+  },
+  "reconnect": {
+    "initial_delay_ms": 500,
+    "max_delay_ms": 30000,
+    "backoff_multiplier": 2.0
+  },
+  "csv": {
+    "enabled": true,
+    "path": "arb_log.csv"
+  }
+}

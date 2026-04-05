@@ -52,6 +52,8 @@ find_library(BOOST_JSON_LIBRARY
 
 set(ARBITRAGE_SOURCES
   src/main.cpp
+  src/config.cpp
+  src/csv_logger.cpp
   src/engine/engine.cpp
   src/exchanges/exchange_ws_common.cpp
   src/exchanges/binance_ws.cpp
