@@ -50,8 +50,7 @@ find_library(BOOST_JSON_LIBRARY
   REQUIRED
 )
 
-set(ARBITRAGE_SOURCES
-  src/main.cpp
+set(ARBITRAGE_CORE_SOURCES
   src/config.cpp
   src/csv_logger.cpp
   src/engine/engine.cpp
@@ -60,16 +59,16 @@ set(ARBITRAGE_SOURCES
   src/exchanges/coinbase_ws.cpp
 )
 
-add_executable(arbitrage_monitor ${ARBITRAGE_SOURCES})
+add_library(arbitrage_core STATIC ${ARBITRAGE_CORE_SOURCES})
 
-target_include_directories(arbitrage_monitor
-  PRIVATE
+target_include_directories(arbitrage_core
+  PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${BOOST_INCLUDE_DIR}
 )
 
-target_link_libraries(arbitrage_monitor
-  PRIVATE
+target_link_libraries(arbitrage_core
+  PUBLIC
     ${BOOST_THREAD_LIBRARY}
     ${BOOST_JSON_LIBRARY}
     OpenSSL::SSL
@@ -77,9 +76,21 @@ target_link_libraries(arbitrage_monitor
 )
 
 if(MSVC)
-  target_compile_definitions(arbitrage_monitor PRIVATE _WIN32_WINNT=0x0A00)
+  target_compile_definitions(arbitrage_core PUBLIC _WIN32_WINNT=0x0A00)
 else()
-  target_compile_options(arbitrage_monitor PRIVATE
+  target_compile_options(arbitrage_core PRIVATE
     -Wall -Wextra -Wpedantic
   )
 endif()
+
+add_executable(arbitrage_monitor src/main.cpp)
+target_link_libraries(arbitrage_monitor PRIVATE arbitrage_core)
+
+add_executable(engine_tests tests/engine_tests.cpp)
+target_link_libraries(engine_tests PRIVATE arbitrage_core)
+
+add_executable(engine_benchmark benchmarks/engine_benchmark.cpp)
+target_link_libraries(engine_benchmark PRIVATE arbitrage_core)
+
+enable_testing()
+add_test(NAME engine_tests COMMAND engine_tests)

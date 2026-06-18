@@ -47,6 +47,31 @@ Executable: **`build/arbitrage_monitor`**.
 
 ---
 
+## Tests and engine benchmarks
+
+The engine has an offline correctness suite and synthetic performance benchmark.
+These do **not** connect to exchanges; they isolate quote freshness, fee/slippage
+math, opportunity logging, and the hot `Engine::evaluate()` path.
+
+```bash
+cmake -B build-bench -DCMAKE_BUILD_TYPE=Release
+cmake --build build-bench --target engine_tests engine_benchmark
+ctest --test-dir build-bench --output-on-failure
+./build-bench/engine_benchmark
+```
+
+Latest local Release run on this machine:
+
+- `engine_tests`: 5/5 correctness scenarios passed.
+- `balanced_market_no_opportunity_log`: **26.84M quote eval/s**, sampled p99 latency **84 ns**, CSV disabled.
+- `crossed_market_with_opportunity_log`: **26.60M quote eval/s**, sampled p99 latency **84 ns**, recording **4,999,999** opportunity samples.
+
+Resume-safe wording: "Built a C++20 cross-exchange arbitrage detector with
+deterministic engine tests and synthetic Release benchmarks measuring ~26M
+quote evaluations/sec on offline Coinbase/Binance quote streams."
+
+---
+
 ## Run
 
 From the directory that contains **`config.json`** (or pass an explicit path):

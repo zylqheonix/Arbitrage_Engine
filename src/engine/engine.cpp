@@ -1,7 +1,6 @@
 #include "engine.hpp"
 
 #include <algorithm>
-#include <cmath>
 
 Engine::Engine(EngineConfig const& cfg, double coinbase_fee,
                double binance_fee, CsvLogger* csv)
@@ -71,7 +70,7 @@ EvalResult Engine::evaluate(QuoteUpdate const& quote) {
   update_quote(quote);
   EvalResult const result = compute_spread();
 
-  if (std::abs(result.best_net) > min_edge_) {
+  if (result.best_net > min_edge_) {
     spread_log_.push_back(result.best_net);
   }
 
