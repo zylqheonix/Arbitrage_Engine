@@ -69,10 +69,6 @@ Latest local Release run on this machine:
 - `balanced_market_no_opportunity_log`: **26.84M quote eval/s**, sampled p99 latency **84 ns**, CSV disabled.
 - `crossed_market_with_opportunity_log`: **26.60M quote eval/s**, sampled p99 latency **84 ns**, recording **4,999,999** opportunity samples.
 
-Resume-safe wording: "Built a C++20 cross-exchange arbitrage detector with
-deterministic engine tests and synthetic Release benchmarks measuring ~26M
-quote evaluations/sec on offline Coinbase/Binance quote streams."
-
 ---
 
 ## Run
