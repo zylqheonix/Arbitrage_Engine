@@ -53,6 +53,9 @@ The engine has an offline correctness suite and synthetic performance benchmark.
 These do **not** connect to exchanges; they isolate quote freshness, fee/slippage
 math, opportunity logging, and the hot `Engine::evaluate()` path.
 
+Benchmark source: `benchmarks/engine_benchmark.cpp`. After building, the binary
+is available at `build-bench/engine_benchmark`.
+
 ```bash
 cmake -B build-bench -DCMAKE_BUILD_TYPE=Release
 cmake --build build-bench --target engine_tests engine_benchmark
